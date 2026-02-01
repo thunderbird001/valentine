@@ -89,6 +89,7 @@
     <script>
         let yesSize = 1.2;
         let messageIndex = 0;
+        let isWaiting = false;
         
         const messages = [
             "Are you sure? 🥺",
@@ -101,6 +102,8 @@
         ];
 
         function growYes() {
+            if (isWaiting) return;
+
             const yesBtn = document.getElementById('yesBtn');
             const noBtn = document.getElementById('noBtn');
             const question = document.getElementById('question');
