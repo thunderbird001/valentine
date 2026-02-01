@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Valentine?</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #fff0f3;
+            font-family: 'Arial', sans-serif;
+            transition: background-color 0.5s;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #ff4d6d;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+        }
+
+        .buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+
+        #yesBtn {
+            background-color: #ff4d6d;
+            color: white;
+            border: none;
+            padding: 15px 32px;
+            font-size: 1.2rem;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        #noBtn {
+            background-color: #8d99ae;
+            color: white;
+            border: none;
+            padding: 15px 32px;
+            font-size: 1.2rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .gif-container img {
+            width: 250px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="gif-container" id="gifDisplay">
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHYyZzR0ZzR0ZzR0ZzR0ZzR0ZzR0ZzR0ZzR0ZzR0ZzR0ZzR0JpbnNfaWQmZXA9djFfaW50ZXJuYWxfZ2lmX2J5X2lkJmN0PWc/c76IJLufpNUMo/giphy.gif" alt="Cute heart">
+        </div>
+        
+        <h1 id="question">Will you be my Valentine? ❤️</h1>
+
+        <div class="buttons">
+            <button id="yesBtn" onclick="celebrate()">Yes</button>
+            <button id="noBtn" onclick="growYes()">No</button>
+        </div>
+    </div>
+
+    <script>
+        let yesSize = 1.2;
+        let noSize = 1.2;
+        const messages = [
+            "Are you sure? 🥺",
+            "Pookie please...",
+            "Think about it!",
+            "I'll be very sad...",
+            "REALLY sure?",
+            "You're clicking the wrong one!",
+            "Give it another thought!",
+            "I'm gonna cry... 😭"
+        ];
+        let messageIndex = 0;
+
+        function growYes() {
+            const yesBtn = document.getElementById('yesBtn');
+            const noBtn = document.getElementById('noBtn');
+            
+            // Make Yes button bigger
+            yesSize += 0.5;
+            yesBtn.style.fontSize = yesSize + "rem";
+            yesBtn.style.padding = (yesSize * 10) + "px " + (yesSize * 20) + "px";
+
+            // Make No button slightly smaller
+            noSize -= 0.1;
+            if (noSize > 0.5) {
+                noBtn.style.fontSize = noSize + "rem";
+            }
+
+            // Change the text of the No button
+            noBtn.innerHTML = messages[messageIndex];
+            messageIndex = (messageIndex + 1) % messages.length;
+        }
+
+        function celebrate() {
+            const container = document.querySelector('.container');
+            container.innerHTML = `
+                <h1 style="font-size: 3.5rem;">YAY! Can't wait! 🥰❤️</h1>
+                <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbW5oYms4ZzR0ZzR0ZzR0ZzR0ZzR0ZzR0ZzR0ZzR0ZzR0ZzR0ZzR0JpbnNfaWQmZXA9djFfaW50ZXJuYWxfZ2lmX2J5X2lkJmN0PWc/MDJ9IbM3vuzB2Mq6Wz/giphy.gif" style="width: 300px; border-radius: 20px;">
+            `;
+            document.body.style.backgroundColor = "#ffb3c1";
+        }
+    </script>
+</body>
+</html>
