@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Be My Valentine?</title>
+    <title>Be My Valentine? ❤️</title>
     <style>
         body {
             display: flex;
@@ -14,18 +14,20 @@
             margin: 0;
             background-color: #fff0f3;
             font-family: 'Arial', sans-serif;
-            transition: background-color 0.5s;
+            overflow-x: hidden;
         }
 
         .container {
             text-align: center;
             padding: 20px;
+            max-width: 90vw;
         }
 
         h1 {
             color: #ff4d6d;
             font-size: 2.5rem;
             margin-bottom: 30px;
+            transition: all 0.3s;
         }
 
         .buttons {
@@ -34,6 +36,7 @@
             justify-content: center;
             align-items: center;
             gap: 20px;
+            min-height: 150px; /* Prevents layout jump when No disappears */
         }
 
         #yesBtn {
@@ -45,7 +48,9 @@
             border-radius: 12px;
             cursor: pointer;
             box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3);
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            z-index: 10;
         }
 
         #noBtn {
@@ -56,7 +61,7 @@
             font-size: 1.2rem;
             border-radius: 12px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
         }
 
         .gif-container img {
@@ -69,11 +74,11 @@
 <body>
 
     <div class="container">
-        <div class="gif-container" id="gifDisplay">
-            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHYyZzR0ZzR0ZzR0ZzR0ZzR0ZzR0ZzR0ZzR0ZzR0ZzR0ZzR0JpbnNfaWQmZXA9djFfaW50ZXJuYWxfZ2lmX2J5X2lkJmN0PWc/c76IJLufpNUMo/giphy.gif" alt="Cute heart">
+        <div class="gif-container">
+            <img id="mainGif" src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExdGtlZzBibWYxODk5cmFsbDJ2azMyeHc5MXFhZ3F5eGp0anEzMnIwbCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/gjHkRHSuHqu99y9Yjt/giphy.gif" alt="Cute heart">
         </div>
         
-        <h1 id="question">Will you be my Valentine? ❤️</h1>
+        <h1 id="question">Tiny beeebeee will you be my Valentine? ❤️</h1>
 
         <div class="buttons">
             <button id="yesBtn" onclick="celebrate()">Yes</button>
@@ -83,7 +88,8 @@
 
     <script>
         let yesSize = 1.2;
-        let noSize = 1.2;
+        let messageIndex = 0;
+        
         const messages = [
             "Are you sure? 🥺",
             "Pookie please...",
@@ -91,36 +97,54 @@
             "I'll be very sad...",
             "REALLY sure?",
             "You're clicking the wrong one!",
-            "Give it another thought!",
-            "I'm gonna cry... 😭"
+            "fine, I'll take it away then"
         ];
-        let messageIndex = 0;
 
         function growYes() {
             const yesBtn = document.getElementById('yesBtn');
             const noBtn = document.getElementById('noBtn');
-            
-            // Make Yes button bigger
-            yesSize += 0.5;
-            yesBtn.style.fontSize = yesSize + "rem";
-            yesBtn.style.padding = (yesSize * 10) + "px " + (yesSize * 20) + "px";
-
-            // Make No button slightly smaller
-            noSize -= 0.1;
-            if (noSize > 0.5) {
-                noBtn.style.fontSize = noSize + "rem";
-            }
+            const question = document.getElementById('question');
 
             // Change the text of the No button
-            noBtn.innerHTML = messages[messageIndex];
-            messageIndex = (messageIndex + 1) % messages.length;
+            if (messageIndex < messages.length) {
+                noBtn.innerHTML = messages[messageIndex];
+                messageIndex++;
+                
+                // If it's the final sassy message, make it look a bit different
+                if (noBtn.innerHTML === "fine, I'll take it away then") {
+                    noBtn.style.backgroundColor = "#4a4e69";
+                }
+            } else {
+                // After the final message, hide the button
+                noBtn.style.display = 'none';
+                question.innerHTML = "Now you HAVE to say Yes! 🥰";
+            }
+
+            // Make Yes button bigger
+            yesSize += 0.6;
+            yesBtn.style.fontSize = yesSize + "rem";
+            yesBtn.style.padding = (yesSize * 12) + "px " + (yesSize * 25) + "px";
+            
+            // On mobile, if the Yes button gets too big, let it wrap/scale
+            if (yesSize > 5) {
+                yesBtn.style.position = "fixed";
+                yesBtn.style.top = "50%";
+                yesBtn.style.left = "50%";
+                yesBtn.style.transform = "translate(-50%, -50%)";
+                yesBtn.style.width = "100vw";
+                yesBtn.style.height = "100vh";
+                yesBtn.style.borderRadius = "0";
+                yesBtn.style.display = "flex";
+                yesBtn.style.alignItems = "center";
+                yesBtn.style.justifyContent = "center";
+            }
         }
 
         function celebrate() {
             const container = document.querySelector('.container');
             container.innerHTML = `
-                <h1 style="font-size: 3.5rem;">YAY! Can't wait! 🥰❤️</h1>
-                <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbW5oYms4ZzR0ZzR0ZzR0ZzR0ZzR0ZzR0ZzR0ZzR0ZzR0ZzR0ZzR0JpbnNfaWQmZXA9djFfaW50ZXJuYWxfZ2lmX2J5X2lkJmN0PWc/MDJ9IbM3vuzB2Mq6Wz/giphy.gif" style="width: 300px; border-radius: 20px;">
+                <h1 style="font-size: 3rem; color: #ff4d6d;">YAY! See you on the 14th! 🥰❤️</h1>
+                <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExZThkNTBtYjhtZmk2bmc0M2JyaGtvNWgwbGtvMHl2NWM5YXVobTVlZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IzXiddo2twMmdmU8Lv/giphy.gif" style="width: 80%; max-width: 300px; border-radius: 20px;">
             `;
             document.body.style.backgroundColor = "#ffb3c1";
         }
