@@ -108,12 +108,20 @@
             // Change the text of the No button
             if (messageIndex < messages.length) {
                 noBtn.innerHTML = messages[messageIndex];
-                messageIndex++;
                 
-                // If it's the final sassy message, make it look a bit different
-                if (noBtn.innerHTML === "fine, I'll take it away then") {
+                // Check if this is the final "take it away" message
+                if (currentMsg === "fine, I'll take it away then") {
+                    isWaiting = true;
                     noBtn.style.backgroundColor = "#4a4e69";
+                    
+                    // Wait 1.5 seconds, then hide the button automatically
+                    setTimeout(() => {
+                        noBtn.style.display = 'none';
+                        question.innerHTML = "Now you HAVE to say Yes! 🥰";
+                        isWaiting = false;
+                    }, 1500);
                 }
+                messageIndex++;
             } else {
                 // After the final message, hide the button
                 noBtn.style.display = 'none';
